@@ -1,1 +1,7 @@
-<p>grafica1 works!</p>
+<div class="row">
+  @for (item of dataGraph; track $index) {
+  <div class="col-4">
+    <app-doughnut [data]="item.data" [titulo]="item.title" />
+  </div>
+  }
+</div>
