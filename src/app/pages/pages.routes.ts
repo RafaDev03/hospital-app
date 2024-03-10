@@ -19,6 +19,11 @@ export const PAGES_ROUTES: Route[] = [
     loadComponent: () =>
       import('./grafica1/grafica1.component').then((m) => m.Grafica1Component),
   },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
+  },
 
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 ];
