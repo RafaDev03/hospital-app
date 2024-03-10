@@ -1,14 +1,15 @@
-<div class="input-group">
+<div class="input-group mt-3">
   <span class="input-group-btn">
-    <button [ngClass]="btnClass" type="button">
+    <button [ngClass]="btnClass" type="button" (click)="increase(-5)">
       <i class="fa-solid fa-minus"></i>
     </button>
   </span>
   <input
     type="text"
     class="form-control"
+    (ngModelChange)="onChange($event)"
+    [(ngModel)]="progreso"
     placeholder=""
-    aria-label="Example text with two button addons"
   />
   <span class="input-group-btn">
     <button [ngClass]="btnClass" type="button" (click)="increase(5)">
