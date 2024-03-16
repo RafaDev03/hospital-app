@@ -28,7 +28,11 @@
       >
         @for (submenuItem of item.submenu; track $index) {
         <li>
-          <a routerLink="{{ submenuItem.url }}">
+          <a
+            routerLink="{{ submenuItem.url }}"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
             <i class="bi bi-circle"></i><span>{{ submenuItem.title }}</span>
           </a>
         </li>
