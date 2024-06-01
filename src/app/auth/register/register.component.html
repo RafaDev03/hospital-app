@@ -30,36 +30,33 @@
                   </p>
                 </div>
 
-                <form class="row g-3 needs-validation" novalidate>
+                <form
+                  class="row g-3 needs-validation"
+                  autocomplete="off"
+                  [formGroup]="registerForm"
+                  (ngSubmit)="createUser()"
+                >
                   <div class="col-12">
                     <label for="yourName" class="form-label">Your Name</label>
                     <input
                       type="text"
-                      name="name"
                       class="form-control"
-                      id="yourName"
-                      required
+                      formControlName="name"
                     />
-                    <div class="invalid-feedback">Please, enter your name!</div>
                   </div>
 
                   <div class="col-12">
-                    <label for="yourEmail" class="form-label">Your Email</label>
+                    <label for="Email" class="form-label">Your Email</label>
                     <input
                       type="email"
-                      name="email"
                       class="form-control"
-                      id="yourEmail"
-                      required
+                      formControlName="email"
                     />
-                    <div class="invalid-feedback">
-                      Please enter a valid Email adddress!
-                    </div>
                   </div>
 
                   <div class="col-12">
                     <label for="yourUsername" class="form-label"
-                      >Username</label
+                      >Password</label
                     >
                     <div class="input-group has-validation">
                       <span
@@ -67,62 +64,68 @@
                         id="inputGroupPrepend"
                       ></span>
                       <input
-                        type="text"
-                        name="username"
+                        type="password"
                         class="form-control"
-                        id="yourUsername"
-                        required
+                        formControlName="password"
                       />
-                      <div class="invalid-feedback">
-                        Please choose a username.
-                      </div>
                     </div>
                   </div>
 
                   <div class="col-12">
                     <label for="yourPassword" class="form-label"
-                      >Password</label
+                      >Repeat Password</label
                     >
                     <input
                       type="password"
-                      name="password"
                       class="form-control"
-                      id="yourPassword"
-                      required
+                      formControlName="password2"
                     />
-                    <div class="invalid-feedback">
-                      Please enter your password!
-                    </div>
                   </div>
 
                   <div class="col-12">
                     <div class="form-check">
                       <input
                         class="form-check-input"
-                        name="terms"
                         type="checkbox"
-                        value=""
-                        id="acceptTerms"
-                        required
+                        formControlName="terminos"
                       />
                       <label class="form-check-label" for="acceptTerms"
                         >I agree and accept the
                         <a href="#">terms and conditions</a></label
                       >
-                      <div class="invalid-feedback">
-                        You must agree before submitting.
-                      </div>
                     </div>
                   </div>
+                  <div class="col-12">
+                    @if(campoNoValid("name")){
+                    <p class="text-danger">* El nombre es obligatorio</p>
+                    }@else if (campoNoValid("email")) {
+                    <p class="text-danger">
+                      * El email es obligatorio y tiene que ser valido
+                    </p>
+                    }@else if (aceptaTerminos()) {
+                    <p class="text-danger">
+                      * Debe de aceptar los terminos de uso
+                    </p>
+                    }@else if (campoNoValid("password") ||
+                    campoNoValid("password2")) {
+                    <p class="text-danger">* Debe de ingresar el password</p>
+                    }@else if (passwordNoValid()) {
+                    <p class="text-danger">
+                      Las contraseñas deben de ser iguales
+                    </p>
+                    }
+                  </div>
+
                   <div class="col-12">
                     <button class="btn btn-primary w-100" type="submit">
                       Create Account
                     </button>
                   </div>
+
                   <div class="col-12">
                     <p class="small mb-0">
                       Already have an account?
-                      <a href="pages-login.html">Log in</a>
+                      <a routerLink="../login">Login</a>
                     </p>
                   </div>
                 </form>
