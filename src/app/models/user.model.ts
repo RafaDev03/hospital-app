@@ -1,4 +1,6 @@
-export class user {
+import { environment } from '../../environments/environment.development';
+const base_url = environment.base_url;
+export class User {
   constructor(
     public name: string,
     public email: string,
@@ -8,4 +10,14 @@ export class user {
     public role?: string,
     public id?: string
   ) {}
+
+  get getImageUrl() {
+    // /uploads/users/no-image.png
+    if (this.img) {
+      return `${base_url}/uploads/users/${this.img}`;
+    } else {
+      return `${base_url}/uploads/users/no-image`;
+    }
+    return '';
+  }
 }
