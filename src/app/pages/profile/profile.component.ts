@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { FileUploadService } from '../../services/file-upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,8 +22,14 @@ import Swal from 'sweetalert2';
 export class ProfileComponent implements OnInit {
   public user?: User;
   public profileForm!: FormGroup;
+  public imageSubir?: File;
+  public imgTemp: any;
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private fileUploadService: FileUploadService
+  ) {
     this.user = this.userService.user;
   }
   ngOnInit(): void {
@@ -35,17 +42,42 @@ export class ProfileComponent implements OnInit {
 
   public updateProfile() {
     console.log(this.profileForm.value);
-    this.userService.updateUser(this.profileForm.value).subscribe((res) => {
-      const { name, email } = this.profileForm.value;
-      this.user!.name = name;
-      this.user!.email = email;
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Usuario Actualizado con éxito',
-        showConfirmButton: false,
-        timer: 1500,
+    this.userService.updateUser(this.profileForm.value).subscribe(
+      (res) => {
+        const { name, email } = this.profileForm.value;
+        this.user!.name = name;
+        this.user!.email = email;
+        Swal.fire('Guardado', 'Usuario actualizado con éxito!', 'success');
+      },
+      (err) => {
+        Swal.fire('Error', err.error.msg, 'error');
+      }
+    );
+  }
+
+  cambiarImagen(event: any) {
+    this.imageSubir = event.target.files[0];
+    if (!this.imageSubir) {
+      this.imgTemp = null;
+      return;
+    }
+    const reader = new FileReader();
+    const url64 = reader.readAsDataURL(this.imageSubir);
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;
+    };
+  }
+
+  subirImagen() {
+    this.fileUploadService
+      .updatePhoto(this.imageSubir!, 'users', this.user?.id || '')
+      .then((img) => {
+        this.user!.img = img;
+        Swal.fire('Guardado', 'Imagen actualizada con éxito', 'success');
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
       });
-    });
   }
 }
