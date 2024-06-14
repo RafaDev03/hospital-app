@@ -1,4 +1,4 @@
-!-- ======= Sidebar ======= -->
+<!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
@@ -9,36 +9,39 @@
     </li>
     <!-- End Dashboard Nav -->
 
-    @for (item of menuItems; track $index) {
-    <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        data-bs-target="#forms-nav"
-        data-bs-toggle="collapse"
-        href="#"
-        aria-expanded="false"
-      >
-        <i class="bi bi-journal-text"></i><span>{{ item.title }} </span
-        ><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul
-        id="forms-nav"
-        class="nav-content collapse"
-        data-bs-parent="#sidebar-nav"
-      >
-        @for (submenuItem of item.submenu; track $index) {
-        <li>
-          <a
-            routerLink="{{ submenuItem.url }}"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <i class="bi bi-circle"></i><span>{{ submenuItem.title }}</span>
-          </a>
-        </li>
-        }
-      </ul>
-    </li>
-    }
+    <!-- Angular Loop to dynamically generate menu items -->
+    <ng-container *ngFor="let item of menuItems; let i = index">
+      <li class="nav-item">
+        <a
+          class="nav-link collapsed"
+          [attr.data-bs-target]="'#forms-nav-' + i"
+          data-bs-toggle="collapse"
+          href="#"
+          aria-expanded="false"
+        >
+          <i class="{{ item.icon }}"></i>
+          <span>{{ item.title }}</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul
+          [id]="'forms-nav-' + i"
+          class="nav-content collapse"
+          data-bs-parent="#sidebar-nav"
+        >
+          <ng-container *ngFor="let submenuItem of item.submenu">
+            <li>
+              <a
+                [routerLink]="submenuItem.url"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <i class="bi bi-circle"></i>
+                <span>{{ submenuItem.title }}</span>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </li>
+    </ng-container>
   </ul>
 </aside>

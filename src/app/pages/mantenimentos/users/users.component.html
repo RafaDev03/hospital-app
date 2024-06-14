@@ -1,0 +1,106 @@
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar usuarios"
+          #txtSearch
+          (keyup)="search(txtSearch.value)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+@if(cargando){
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center" role="alert">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere</p>
+    </div>
+  </div>
+</div>
+} @if(!cargando){
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card"></div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Users ({{ totalUsers }}) - ({{ desde }})</h5>
+        <!-- Default Table -->
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="w100">Imagen</th>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col" class="w140">Role</th>
+                <th scope="col" class="w100">Auth</th>
+                <th scope="col" class="w100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users; track $index) {
+              <tr>
+                <th scope="row">
+                  <img
+                    [src]="user.getImageUrl"
+                    alt="imagen"
+                    class="avatar cursor"
+                    (click)="openModal(user)"
+                  />
+                </th>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="user.role"
+                    (change)="updateRole(user)"
+                  >
+                    <option value="ADMIN_ROLE">Admin</option>
+
+                    <option value="USER_ROLE">User</option>
+                  </select>
+                </td>
+                <td>
+                  @if(user.google){
+                  <span class="badge bg-danger">Google</span>
+                  }@else{
+                  <span class="badge bg-info">Email</span>
+                  }
+                </td>
+                <td class="text-nowrap text-center">
+                  <a
+                    (click)="deleteUser(user)"
+                    class="cursor"
+                    data-toggle="tooltip"
+                    data-original-title="Delete"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        @if(txtSearch.value.length === 0){
+        <button class="btn btn-secondary" (click)="cambiarPagina(-5)">
+          Anterior
+        </button>
+        &nbsp;
+        <button class="btn btn-secondary" (click)="cambiarPagina(5)">
+          Seguiente
+        </button>
+        }
+        <!-- End Default Table Example -->
+      </div>
+    </div>
+  </div>
+</div>
+}

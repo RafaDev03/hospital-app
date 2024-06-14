@@ -40,5 +40,31 @@ export const PAGES_ROUTES: Route[] = [
     data: { title: 'RxJs' },
   },
 
+  //Mantenimientos
+  {
+    path: 'users',
+    loadComponent: () =>
+      import('./mantenimentos/users/users.component').then(
+        (m) => m.UsersComponent
+      ),
+    data: { title: 'Users' },
+  },
+  {
+    path: 'doctors',
+    loadComponent: () =>
+      import('./mantenimentos/doctors/doctors.component').then(
+        (m) => m.DoctorsComponent
+      ),
+    data: { title: 'Doctors' },
+  },
+  {
+    path: 'hospitals',
+    loadComponent: () =>
+      import('./mantenimentos/hospitals/hospitals.component').then(
+        (m) => m.HospitalsComponent
+      ),
+    data: { title: 'hospitals' },
+  },
+
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 ];

@@ -4,7 +4,7 @@ import { User } from '../models/user.model';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { environment } from '../../environments/environment.development';
 import { LoginForm } from '../interfaces/login-form.interface';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, delay, map, of, tap } from 'rxjs';
 import { UpdateForm } from '../interfaces/update-form.interface';
 
 const baseUrl = environment.base_url;
@@ -17,6 +17,14 @@ export class UserService {
 
   get token(): string {
     return localStorage.getItem('token') || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token,
+      },
+    };
   }
 
   constructor(private http: HttpClient) {}
@@ -53,14 +61,48 @@ export class UserService {
   }
 
   updateUser(formData: UpdateForm) {
-    return this.http.put(`${baseUrl}/users/${this.user?.id}`, formData, {
-      headers: {
-        'x-token': this.token,
-      },
-    });
+    return this.http.put(
+      `${baseUrl}/users/${this.user?.id}`,
+      formData,
+      this.headers
+    );
   }
 
   logout() {
     localStorage.removeItem('token');
+  }
+
+  findUsers(desde: number) {
+    const url = `${baseUrl}/users?desde=${desde}`;
+    return this.http.get(url, this.headers).pipe(
+      map((res: any) => {
+        const users = res.users.map(
+          (user: any) =>
+            new User(
+              user.name,
+              user.email,
+              '',
+              user.img,
+              user.google,
+              user.role,
+              user.id
+            )
+        );
+        return {
+          count: res.count,
+          users,
+        };
+      })
+    );
+  }
+
+  deleteUsers(id: string) {
+    const url = `${baseUrl}/users/${id}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  saveUser(user: User) {
+    const url = `${baseUrl}/users/${user.id}`;
+    return this.http.put(url, user, this.headers);
   }
 }

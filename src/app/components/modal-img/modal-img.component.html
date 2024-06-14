@@ -1,0 +1,56 @@
+<!-- Modal -->
+<div
+  #myModal
+  class="modal fade show"
+  id="myModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          @if(!imgTemp){
+          <img [src]="this.modalService.img" alt="" class="img-avatar" />
+          }@else{
+          <img [src]="imgTemp" alt="" class="img-avatar" />
+          }
+        </div>
+        <div class="row mb-3">
+          <input
+            type="file"
+            class="form-control"
+            id="File"
+            (change)="cambiarImagen($event)"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="close()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="subirImagen()">
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
