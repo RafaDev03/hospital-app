@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,14 @@ export class SidebarService {
       ],
     },
   ];
+
+  private sidebarSubject = new Subject<void>();
+  sidebarState$ = this.sidebarSubject.asObservable();
+
+  clickSidebar() {
+    console.log('hello');
+    this.sidebarSubject.next();
+  }
 
   constructor() {}
 }

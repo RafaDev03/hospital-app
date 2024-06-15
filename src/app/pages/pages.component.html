@@ -1,11 +1,13 @@
-<app-header></app-header>
-<main id="main" class="main">
-  <app-breadcrumbs></app-breadcrumbs>
-  <section class="section">
-    <router-outlet></router-outlet>
-  </section>
-</main>
-<app-sidebar></app-sidebar>
-<app-modal-img></app-modal-img>
+<div [ngClass]="{ 'toggle-sidebar': !sidebarStatus }">
+  <app-header (sidebarToggled)="sidebarStatus = $event"></app-header>
+  <main id="main" class="main">
+    <app-breadcrumbs></app-breadcrumbs>
+    <section class="section">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+  <app-sidebar></app-sidebar>
+  <app-modal-img></app-modal-img>
 
-<app-footer></app-footer>
+  <app-footer></app-footer>
+</div>

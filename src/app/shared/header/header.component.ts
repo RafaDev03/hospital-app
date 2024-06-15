@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SidebarService } from '../../services/sidebar.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -12,9 +13,20 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class HeaderComponent {
   public user?: User;
+  @Output() sidebarToggled = new EventEmitter<boolean>();
+  menuStatus: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private sidebarService: SidebarService
+  ) {
     this.user = this.userService.user;
+  }
+
+  sidebarToogle() {
+    this.menuStatus = !this.menuStatus;
+    this.sidebarToggled.emit(this.menuStatus);
   }
 
   logout() {

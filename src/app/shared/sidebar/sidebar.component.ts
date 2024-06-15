@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarService } from '../../services/sidebar.service';
 import { HeaderComponent } from '../header/header.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,11 +12,14 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   menuItems: any[];
+
+  @Input() sidebarStatus: boolean = false;
 
   constructor(private sidebarService: SidebarService) {
     this.menuItems = sidebarService.menu;
     console.log(this.menuItems);
   }
+  ngOnInit(): void {}
 }

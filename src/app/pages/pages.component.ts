@@ -5,11 +5,13 @@ import { SidebarComponent } from '../shared/sidebar/sidebar.component';
 import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { ModalImgComponent } from '../components/modal-img/modal-img.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pages',
   standalone: true,
   imports: [
+    CommonModule,
     RouterOutlet,
     HeaderComponent,
     SidebarComponent,
@@ -21,6 +23,7 @@ import { ModalImgComponent } from '../components/modal-img/modal-img.component';
   styleUrl: './pages.component.css',
 })
 export class PagesComponent implements OnInit {
+  sidebarStatus: boolean = false;
   ngOnInit(): void {
     this.getUsuarios().then((usuarios) => console.log('Usuarios', usuarios));
     /* const promise = new Promise((resolve, reject) => {
