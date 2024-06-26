@@ -1,1 +1,101 @@
-<p>doctors works!</p>
+<div class="row animated fadeIn fast">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar usuarios"
+          #txtDoctor
+          (keyup)="searchDoctor(txtDoctor.value)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  @if(loading){
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="alert alert-info text-center" role="alert">
+        <h4 class="alert-heading">Cargando</h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p class="mb-0">Por favor espere</p>
+      </div>
+    </div>
+  </div>
+  }
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8">
+            <h5 class="card-title">Doctors ({{ doctors.length }})</h5>
+          </div>
+          <div class="col">
+            <div class="d-flex justify-content-end mt-3">
+              <a class="btn btn-primary" [routerLink]="['../doctor', 'create']">
+                <i class="fa fa-hospital-o"></i>
+                Add
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default Table -->
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="w100">Imagen</th>
+
+                <th scope="col">Name</th>
+
+                <th scope="col" class="w100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (doctor of doctors; track $index) {
+              <tr>
+                <th scope="row">
+                  <img
+                    (click)="cargarFoto(doctor)"
+                    [src]="doctor.img! | img : 'doctors'"
+                    alt=""
+                    class="avatar cursor"
+                  />
+                </th>
+                <td>{{ doctor.name }}</td>
+                <td class="text-nowrap">
+                  <a
+                    class="cursor"
+                    [routerLink]="['../doctor', doctor.id]"
+                    data-toggle="tooltip"
+                    data-original-title="Edit"
+                  >
+                    <i class="fa fa-pencil text-inverse m-r-10"></i>
+                  </a>
+                  &nbsp;
+                  <a
+                    class="cursor"
+                    data-toggle="tooltip"
+                    data-original-title="Delete"
+                    (click)="deleteDoctor(doctor)"
+                  >
+                    <i class="fa fa-close text-danger"></i>
+                  </a>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <!-- <button class="btn btn-secondary">Siguiente</button>
+        &nbsp;
+        <button class="btn btn-secondary">Anterior</button> -->
+        <!-- End Default Table Example -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Vertical Form</h5>
+
+        <!-- Vertical Form -->
+        <form
+          class="row g-3"
+          [formGroup]="doctorForm"
+          (ngSubmit)="saveDoctor()"
+        >
+          @if (doctorSeleceted) {
+          <div class="col-12">
+            <label for="inputNanme4" class="form-label">Img</label>
+            <img
+              (click)="openModal(doctorSeleceted)"
+              [src]="doctorSeleceted.img! | img : 'doctors'"
+              alt=""
+              class="w200 form-control cursor"
+            />
+          </div>
+          }
+          <div class="col-12">
+            <label for="inputEmail4" class="form-label">Name</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail4"
+              formControlName="name"
+            />
+          </div>
+          <div class="col-12">
+            <label for="inputPassword4" class="form-label">Hospital</label>
+
+            <select
+              name=""
+              id=""
+              class="form-control"
+              formControlName="hospital"
+            >
+              <option value="">Selecione un hospital</option>
+              @for (hospital of hospitals; track $index) {
+              <option [value]="hospital.id">{{ hospital.name }}</option>
+
+              }
+            </select>
+          </div>
+
+          <div class="text-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="doctorForm.invalid"
+            >
+              Save
+            </button>
+            &nbsp;
+            <button type="reset" class="btn btn-secondary" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+        <!-- Vertical Form -->
+      </div>
+    </div>
+  </div>
+
+  @if(hospitalSelected){
+  <div class="col animated bounce">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Hospital</h4>
+        <h5 class="card-subtible">{{ hospitalSelected.name }}</h5>
+        <img
+          [src]="hospitalSelected.img! | img : 'hospitals'"
+          alt=""
+          class="img-thumbnail"
+        />
+      </div>
+    </div>
+  </div>
+  }
+</div>

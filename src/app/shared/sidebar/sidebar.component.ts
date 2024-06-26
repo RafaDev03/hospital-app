@@ -15,11 +15,8 @@ import { Subscription } from 'rxjs';
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  @Input() sidebarStatus: boolean = false;
-
   constructor(private sidebarService: SidebarService) {
     this.menuItems = sidebarService.menu;
-    console.log(this.menuItems);
   }
   ngOnInit(): void {}
 }

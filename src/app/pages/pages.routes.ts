@@ -58,6 +58,14 @@ export const PAGES_ROUTES: Route[] = [
     data: { title: 'Doctors' },
   },
   {
+    path: 'doctor/:id',
+    loadComponent: () =>
+      import('./mantenimentos/doctors/doctor/doctor.component').then(
+        (m) => m.DoctorComponent
+      ),
+    data: { title: 'Mantenimiento Doctor' },
+  },
+  {
     path: 'hospitals',
     loadComponent: () =>
       import('./mantenimentos/hospitals/hospitals.component').then(

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { map } from 'rxjs';
 import { User } from '../models/user.model';
+import { Hospital } from '../models/hospital.model';
+import { Doctor } from '../models/doctor.model';
 const baseUrl = environment.base_url;
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,10 @@ export class SearchesService {
         switch (tipo) {
           case 'users':
             return this.transformUsers(res.data);
+          case 'hospitals':
+            return this.transformHospitals(res.data);
+          case 'doctors':
+            return this.transformDoctors(res.data);
           default:
             return [];
         }
@@ -24,7 +30,15 @@ export class SearchesService {
     );
   }
 
-  transformUsers(list: any[]): User[] {
+  private transformHospitals(list: any[]): Hospital[] {
+    return list;
+  }
+
+  private transformDoctors(list: any[]): Doctor[] {
+    return list;
+  }
+
+  private transformUsers(list: any[]): User[] {
     return list.map(
       (user: any) =>
         new User(

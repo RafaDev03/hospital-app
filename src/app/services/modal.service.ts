@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { User } from '../models/user.model';
 
 const baseUrl = environment.base_url;
 
@@ -19,15 +18,13 @@ export class ModalService {
 
   modalState$ = this.modalSubject.asObservable();
 
-  openModal(tipo: 'users' | 'doctor' | 'hospital', user: User) {
-    this.id = user.id;
+  openModal(tipo: 'users' | 'doctors' | 'hospitals', object: any) {
+    this.id = object.id;
     this.tipo = tipo;
-    this.img = `${baseUrl}/uploads/${tipo}/${user.img}`;
+    this.img = `${baseUrl}/uploads/${tipo}/${object.img}`;
 
     this.modalSubject.next();
   }
-
-  saveModal() {}
 
   constructor() {}
 }

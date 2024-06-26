@@ -27,14 +27,5 @@ export class SidebarService {
       ],
     },
   ];
-
-  private sidebarSubject = new Subject<void>();
-  sidebarState$ = this.sidebarSubject.asObservable();
-
-  clickSidebar() {
-    console.log('hello');
-    this.sidebarSubject.next();
-  }
-
   constructor() {}
 }

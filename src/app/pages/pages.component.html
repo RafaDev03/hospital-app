@@ -1,4 +1,4 @@
-<div [ngClass]="{ 'toggle-sidebar': !sidebarStatus }">
+<div [ngClass]="{ 'toggle-sidebar': sidebarStatus }">
   <app-header (sidebarToggled)="sidebarStatus = $event"></app-header>
   <main id="main" class="main">
     <app-breadcrumbs></app-breadcrumbs>

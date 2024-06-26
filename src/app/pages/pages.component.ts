@@ -24,22 +24,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PagesComponent implements OnInit {
   sidebarStatus: boolean = false;
-  ngOnInit(): void {
-    this.getUsuarios().then((usuarios) => console.log('Usuarios', usuarios));
-    /* const promise = new Promise((resolve, reject) => {
-      if (false) {
-        resolve('Hello world');
-      } else {
-        reject('Algo salio mal');
-      }
-    });
-    promise
-      .then((resp) => {
-        console.log(resp);
-      })
-      .catch((error) => console.log('Error en mi promesa', error));
-    console.log('Fin del init'); */
-  }
+  ngOnInit(): void {}
   getUsuarios() {
     return new Promise((resolve) => {
       fetch('https://reqres.in/api/users')
