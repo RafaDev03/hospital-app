@@ -19,6 +19,10 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user?.role!;
+  }
+
   get headers() {
     return {
       headers: {
@@ -32,13 +36,17 @@ export class UserService {
   createUser(formData: RegisterForm) {
     return this.http.post(`${baseUrl}/users`, formData).pipe(
       tap((res: any) => {
-        localStorage.setItem('token', res.token);
+        this.saveLocalStorage(res.token, res.menu);
       })
     );
   }
 
   loginUser(formData: LoginForm) {
-    return this.http.post(`${baseUrl}/login`, formData);
+    return this.http.post(`${baseUrl}/login`, formData).pipe(
+      tap((resp: any) => {
+        this.saveLocalStorage(resp.token, resp.menu);
+      })
+    );
   }
 
   validToken(): Observable<boolean> {
@@ -53,7 +61,7 @@ export class UserService {
         map((res: any) => {
           const { email, google, id, img, name, role } = res.user;
           this.user = new User(name, email, '', img, google, role, id);
-          localStorage.setItem('token', res.token);
+          this.saveLocalStorage(res.token, res.menu);
           return true;
         }),
         catchError(() => of(false))
@@ -70,6 +78,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
   }
 
   findUsers(desde: number) {
@@ -104,5 +113,10 @@ export class UserService {
   saveUser(user: User) {
     const url = `${baseUrl}/users/${user.id}`;
     return this.http.put(url, user, this.headers);
+  }
+
+  saveLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
   }
 }

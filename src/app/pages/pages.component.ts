@@ -25,11 +25,4 @@ import { CommonModule } from '@angular/common';
 export class PagesComponent implements OnInit {
   sidebarStatus: boolean = false;
   ngOnInit(): void {}
-  getUsuarios() {
-    return new Promise((resolve) => {
-      fetch('https://reqres.in/api/users')
-        .then((resp) => resp.json())
-        .then((body) => resolve(body.data));
-    });
-  }
 }

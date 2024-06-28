@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         console.log(res);
         if (res.ok && res.token) {
-          localStorage.setItem('token', res.token);
           this.router.navigate(['/dashboard']);
         } else {
           Swal.fire('Error', 'Login is failed', 'error');

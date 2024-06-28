@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { adminGuard } from '../guards/admin.guard';
 
 export const PAGES_ROUTES: Route[] = [
   {
@@ -43,6 +44,7 @@ export const PAGES_ROUTES: Route[] = [
   //Mantenimientos
   {
     path: 'users',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./mantenimentos/users/users.component').then(
         (m) => m.UsersComponent
@@ -72,6 +74,14 @@ export const PAGES_ROUTES: Route[] = [
         (m) => m.HospitalsComponent
       ),
     data: { title: 'hospitals' },
+  },
+  {
+    path: 'search/:termino',
+    loadComponent: () =>
+      import('../pages/serches/serches.component').then(
+        (m) => m.SerchesComponent
+      ),
+    data: { title: 'searches' },
   },
 
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

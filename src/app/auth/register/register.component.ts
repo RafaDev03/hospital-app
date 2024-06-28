@@ -41,7 +41,6 @@ export class RegisterComponent {
 
   createUser() {
     this.formSubmitted = true;
-    console.log(this.registerForm.value);
     if (this.registerForm.invalid) {
       return;
     }
@@ -49,8 +48,6 @@ export class RegisterComponent {
     //Realizar la creación de user
     this.userService.createUser(this.registerForm.value).subscribe(
       (response) => {
-        console.log('Usuario creado');
-        console.log(response);
         if (response.ok === true) {
           this.router.navigate(['/dashboard']);
         }

@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Users</h3>
+        @if (users.length <= 0) {
+        <div class="alert alert-danger" role="alert">No users to show</div>
+        }
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users; track $index) {
+              <tr>
+                <td>
+                  <img
+                    [src]="user.img! | img : 'users'"
+                    alt=""
+                    class="avatar"
+                  />
+                </td>
+                <td>{{ user.name }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Doctors</h3>
+        @if (doctors.length <= 0) {
+        <div class="alert alert-danger" role="alert">No doctor to show</div>
+        }
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (doctor of doctors; track $index) {
+              <tr>
+                <td>
+                  <img
+                    [src]="doctor.img! | img : 'doctors'"
+                    alt=""
+                    class="avatar"
+                  />
+                </td>
+                <td>{{ doctor.name }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Hospitals</h3>
+        @if (hospitals.length <= 0) {
+        <div class="alert alert-danger" role="alert">No hospitals to show</div>
+        }
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (hospital of hospitals; track $index) {
+              <tr>
+                <td>
+                  <img
+                    [src]="hospital.img! | img : 'hospitals'"
+                    alt=""
+                    class="avatar"
+                  />
+                </td>
+                <td>{{ hospital.name }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

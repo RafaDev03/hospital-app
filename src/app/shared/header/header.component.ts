@@ -4,10 +4,12 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
+import { SearchesService } from '../../services/searches.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, SidebarComponent],
+  imports: [RouterLink, SidebarComponent, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -15,11 +17,12 @@ export class HeaderComponent {
   public user?: User;
   @Output() sidebarToggled = new EventEmitter<boolean>();
   menuStatus: boolean = false;
+  searchStatus: boolean = false;
 
   constructor(
     private userService: UserService,
     private router: Router,
-    private sidebarService: SidebarService
+    private searchService: SearchesService
   ) {
     this.user = this.userService.user;
   }
@@ -32,5 +35,16 @@ export class HeaderComponent {
   logout() {
     this.userService.logout();
     this.router.navigate(['/auth']);
+  }
+
+  search(termino: string) {
+    if (termino.length < 0) {
+      this.router.navigateByUrl('/dashboard');
+    }
+    this.router.navigateByUrl(`dashboard/search/${termino}`);
+  }
+
+  aparecer() {
+    this.searchStatus = !this.searchStatus;
   }
 }

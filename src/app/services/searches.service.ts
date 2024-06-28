@@ -30,6 +30,11 @@ export class SearchesService {
     );
   }
 
+  searchTotal(termino: string) {
+    const url = `${baseUrl}/search/${termino}`;
+    return this.http.get(url, this.headers);
+  }
+
   private transformHospitals(list: any[]): Hospital[] {
     return list;
   }
